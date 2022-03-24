@@ -24,10 +24,12 @@ namespace csvToDb
                 {
                     try
                     {
-                    string[] columns = reader.ReadFields();
-                    SurveyList.Add(new Survey(int.Parse(columns[1]), columns[2], columns[3], int.Parse(columns[4])));
+                        string[] columns = reader.ReadFields();
+                        SurveyList.Add(new Survey(int.Parse(columns[1]), columns[2], columns[3], int.Parse(columns[4])));
 
-                    }catch (Exception){
+                    }
+                    catch (Exception)
+                    {
                         Console.WriteLine("line x is invalid. skipping");
                     }
 
@@ -61,23 +63,13 @@ namespace csvToDb
                 surveyDB.DeleteAll(); // raderar allt Sen raden under lägger vi om allt på nytt så det inte blir dubletter, det kan finnas en bättre lösning
                 surveyDB.Insert(SurveyList); // serialiserar objektet till JSON och sparar undan det 
                                              // som en del av MyData.db
-                var result = surveyDB.Query().Where(x => x.LunchTime == 12).Select(x => new { x.HomeOrRestaurant, x.LunchTime }).ToList();// la till en test så vi ser att data finns i data basen och hämtar alla som har lunchTid vid 12
-                Console.WriteLine(result); // vi ser här att svaret blir 9 av 13 som har lunch vid 12.
-                Console.WriteLine("Klar");
+                                             // Fråga 1, hur många har svarat på formuläret 
+                var result = surveyDB.Query().Where(x => x.LunchTime == 12).Count();
+                // la till en test så vi ser att data finns i data basen och hämtar alla som har lunchTid vid 12
+                Console.WriteLine($"Antalet personer som äter lunch vid 12 är {result} stycken"); // vi ser här att svaret blir 9 av 13 som har lunch vid 12.
+                /* medelvärdet av kött konsumtion, hur många av alla som svarat på formuläret äter kött, populäraste typen av mat, hur många har svarat på formuläret, 
+               hur många som svarade på formuläret äter helre hemma */
             }
-
-            /*// Del 2: Anslut till databasen igen och se vad som finns där
-            using (var db = new LiteDatabase("MyData.db"))
-            {
-                var SurveyDB = db.GetCollection<Survey>("SurveyForm");
-
-                var antal = SurveyDB.Count();
-                var contents = SurveyDB.FindAll();
-
-                Console.WriteLine("Det finns såhär många saker i min samling: " + antal);
-
-            }
-            */
         }
     }
 }
