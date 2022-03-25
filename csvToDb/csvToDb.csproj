@@ -11,4 +11,9 @@
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="5.0.11" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="SurveyForm.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

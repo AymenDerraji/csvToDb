@@ -17,6 +17,10 @@ namespace csvToDb
                 HomeOrRestaurant = homerestaurant;
                 LunchTime = lunchtime;
             }
+        public Survey()
+        {
+
+        }
 
         }
 }

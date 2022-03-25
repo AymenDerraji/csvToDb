@@ -8,10 +8,10 @@ namespace csvToDb
     internal class Program
     {
         private static void Main(string[] args)
-        {
+        { 
             // En lista av klassen Survey
             List<Survey> SurveyList = new List<Survey>();
-
+            
             // CSV - TextFieldParser 
             using (var reader = new TextFieldParser("SurveyForm.csv"))
             {
@@ -26,11 +26,15 @@ namespace csvToDb
                     {
                         string[] columns = reader.ReadFields(); // Gör om raderna till arrayer.
                         SurveyList.Add(new Survey(int.Parse(columns[1]), columns[2], columns[3], int.Parse(columns[4]))); // Lägger varje index av kolumerna i listan
+                       
+                        
                     }
                     catch (Exception error) // Kommer hit ifall den hittar ett fel!
                     {
                         Console.WriteLine($"Hoppsan! {error} hände när den försökte läsa en rad i filen."); // felmedelandet
                     }
+                    
+                    
                 }
             }
 
@@ -50,13 +54,19 @@ namespace csvToDb
                 
                 // Fråga 1, hur många har svarat på formuläret
                 var answer = surveyDB.Count(); 
-                Console.WriteLine(answer);
-                // Fråga 2, medelvärdet av kött konsumtionen
-
+                Console.WriteLine("Antal svar på formuläret: " + answer);
+                // Fråga 2, genomsnitt hur ofta kött äts per vecka
+                double sum = 0;
+                foreach (var averageMeat in SurveyList)
+                {
+                    sum += averageMeat.MeatWeeks;
+                }
+                Console.WriteLine("Genomsnitt kött konsumptionen per vecka: " + sum/answer);
                 // Fråga 3, Populäraste typen av mat
 
                 // Fråga 4, hur många av alla som svarat på formuläret äter kött
-
+                var meatEating = surveyDB.Count(x => x.MeatWeeks > 0);
+                Console.WriteLine("Antal individer som äter kött per vecka: " + meatEating);
                 // Fråga 5, hur många som svarade på formuläret äter oftast hemma
 
                 // Fråga 6, hur många som äter vid klockan 12.
