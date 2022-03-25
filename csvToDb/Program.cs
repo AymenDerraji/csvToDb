@@ -53,18 +53,22 @@ namespace csvToDb
                 surveyDB.Insert(SurveyList); // Vi lägger listan in i databasen.
                 
                 // Fråga 1, hur många har svarat på formuläret
+                // Räknar de rader som finns i surveyDB
                 var answer = surveyDB.Count(); 
                 Console.WriteLine("Antal svar på formuläret: " + answer);
                 // Fråga 2, genomsnitt hur ofta kött äts per vecka
-                double sum = 0;
-                foreach (var averageMeat in SurveyList)
+                double sum = 0; 
+                foreach (var meat in SurveyList) // går igeom survetList och adderar värdet MeatWeeks har
                 {
-                    sum += averageMeat.MeatWeeks;
+                    sum += meat.MeatWeeks;
                 }
+                // Dividerar summan med answer, har redan räknat antal rader som finns i variablen answer
                 Console.WriteLine("Genomsnitt kött konsumptionen per vecka: " + sum/answer);
                 // Fråga 3, Populäraste typen av mat
 
+
                 // Fråga 4, hur många av alla som svarat på formuläret äter kött
+                // Räknar endast de som har svarat att de åtminstone äter kött en gång per vecka
                 var meatEating = surveyDB.Count(x => x.MeatWeeks > 0);
                 Console.WriteLine("Antal individer som äter kött per vecka: " + meatEating);
                 // Fråga 5, hur många som svarade på formuläret äter oftast hemma
