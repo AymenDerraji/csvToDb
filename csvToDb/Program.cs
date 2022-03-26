@@ -71,7 +71,16 @@ namespace csvToDb
                 // key och gör till array. SKulle man sätta mostPopular[2] får man error eftersom arrayen innehåller bara det mest populäraste mat typen vilket råkar vara 2 st,
                 // dvs 2st mat typer har lika många "röster"
                 var mostPopular = popularFood.Where(x => x.Count() == maxCount).Select(x => x.Key).ToArray();
-                Console.WriteLine("De mest populära typerna av mat är " + mostPopular[0] + " och " + mostPopular[1]);
+                string sumOfMostPopular = "";
+                for (int i = 0; i < mostPopular.Length; i++)
+                {
+                    if (i == 0)
+                        sumOfMostPopular = mostPopular[i];
+                    else
+                        sumOfMostPopular += " och " + mostPopular[i];
+
+                }
+                Console.WriteLine("De mest populära typerna av mat är " + sumOfMostPopular);
 
                 // Fråga 4, hur många av alla som svarat på formuläret äter kött
                 // Räknar endast de som har svarat att de åtminstone äter kött en gång per vecka
