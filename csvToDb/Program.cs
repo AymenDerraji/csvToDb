@@ -1,4 +1,6 @@
-﻿using LiteDB;
+﻿// Uppgiften är gjord av: Peyman Eliassi, Simon Hultqvist, Aymen Derraji
+
+using LiteDB;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
